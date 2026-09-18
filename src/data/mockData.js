@@ -176,8 +176,6 @@ export const sidebarMenuItems = [
   { id: 'crops', label: 'Crop Analysis', icon: 'MapPin', badge: null },
   { id: 'irrigation', label: 'Irrigation & Harvest', icon: 'Droplets', badge: null },
   { id: 'weather', label: 'Weather', icon: 'SunMedium', badge: null },
-  { id: 'alerts', label: 'Alerts', icon: 'Bell', badge: 3, badgeColor: 'bg-rose-500 text-white' },
-  { id: 'farm-workers', label: 'Farm Workers', icon: 'Users', badge: null },
   { id: 'settings', label: 'Settings', icon: 'Settings', badge: null },
   { id: 'account', label: 'Account', icon: 'User', badge: null },
   { id: 'help-support', label: 'Help & Support', icon: 'HelpCircle', badge: null },
