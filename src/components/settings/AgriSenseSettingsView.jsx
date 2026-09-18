@@ -141,33 +141,9 @@ export default function AgriSenseSettingsView({ userData, onSaveProfile }) {
         </div>
       </div>
 
-      {/* 2. Main Workarea: Left Navigation Category Tabs & Right Content Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Category Navigation Pills (Left 3 cols) */}
-        <div className="lg:col-span-3 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs space-y-1">
-          {sidebarTabs.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-emerald-50 text-emerald-800 font-extrabold shadow-2xs'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-400'}`} />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Content Cards Grid (Right 9 cols) */}
-        <div className="lg:col-span-9 space-y-6">
-          {/* Card 1: Profile Information */}
+      {/* 2. Main Workarea: Settings Content Cards */}
+      <div className="w-full space-y-6">
+        {/* Card 1: Profile Information */}
           <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-2xs space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
@@ -483,7 +459,6 @@ export default function AgriSenseSettingsView({ userData, onSaveProfile }) {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Interactive Edit Modal */}
       {editingSection && (
