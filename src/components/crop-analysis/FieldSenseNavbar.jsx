@@ -12,7 +12,7 @@ export default function FieldSenseNavbar({
     { id: 'user-dashboard', label: 'User Dashboard' },
     { id: 'ai-analysis', label: 'AI Analysis' },
     { id: 'crop-calendar', label: 'Crop Calendar' },
-    { id: 'overview', label: 'AgFarm Operations' },
+    { id: 'overview', label: 'GrowiaFarm Operations' },
     { id: 'user-profile', label: 'Account Profile' },
   ];
 
