@@ -17,6 +17,9 @@ import AddCalendarTaskModal from './components/crop-analysis/AddCalendarTaskModa
 import CropScheduleView from './components/crop-schedule/CropScheduleView';
 import LogOperationModal from './components/crop-schedule/LogOperationModal';
 
+// HarvestIQ Precision Irrigation & Harvest components
+import HarvestIrrigationView from './components/harvest-irrigation/HarvestIrrigationView';
+
 // User Dashboard components
 import EmuraDashboardView from './components/emura-dashboard/EmuraDashboardView';
 import UserDashboardView from './components/user-dashboard/UserDashboardView';
@@ -427,33 +430,37 @@ export default function App() {
             </div>
           )}
 
-          {/* VIEW 6: Irrigation Schedule */}
+          {/* VIEW: HarvestIQ Precision Irrigation & Harvest Dashboard */}
           {activeTab === 'irrigation' && (
             <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
-              <div className="flex items-center gap-3 pb-2 border-b border-slate-200/60">
-                <button
-                  onClick={() => setIsMobileSidebarOpen(true)}
-                  className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50"
-                >
-                  ☰
-                </button>
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                    Automated Irrigation Control
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Zone-by-zone pivot sprinklers and drip line telemetry
-                  </p>
+              {/* Header with Mobile Menu Trigger */}
+              <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-200/60">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
+                  >
+                    ☰
+                  </button>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                      Irrigation & Harvest Management (HarvestIQ)
+                    </h2>
+                    <p className="text-xs text-slate-500">
+                      Lembang Farm · 585 ha Monitored · Smart Drip Automation & Multispectral Telemetry
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs font-bold text-emerald-700">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Harvest Campaign Active (75%)
+                  </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                <IrrigationScheduleCard />
-                <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm space-y-3">
-                  <h3 className="text-sm font-bold text-slate-900">Water Flow Optimization</h3>
-                  <p className="text-xs text-slate-500">12,400 Liters utilized today across 18 completed cycles. Saving 14% water compared to standard schedules.</p>
-                </div>
-              </div>
+              <HarvestIrrigationView onNavigateToDiagnostics={() => setActiveTab('crops')} />
             </div>
           )}
 
