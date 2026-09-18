@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, Layers, Sparkles, Activity, Eye, EyeOff } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import StatsGrid from './components/StatsGrid';
@@ -87,7 +88,8 @@ export default function App() {
   const [equipmentFleet, setEquipmentFleet] = useState(initialEquipmentFleet);
   const [isAddWorkerOpen, setIsAddWorkerOpen] = useState(false);
 
-  // Modals state
+  // Modals & UI Expansion state
+  const [isTelemetryExpanded, setIsTelemetryExpanded] = useState(false);
   const [isAddFieldOpen, setIsAddFieldOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSeeAllFieldsOpen, setIsSeeAllFieldsOpen] = useState(false);
@@ -244,36 +246,132 @@ export default function App() {
                 onNavigateToIrrigation={() => setActiveTab('irrigation')}
               />
 
-              {/* Farm Operations Telemetry */}
-              <div className="pt-6 border-t border-slate-200/80 space-y-6">
-                <div>
-                  <h3 className="text-lg font-black text-slate-900 tracking-tight">
-                    Farm Cultivation Telemetry & Operations
-                  </h3>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Active parcel performance, sensor thresholds, and automated drip irrigation
-                  </p>
-                </div>
-
-                <StatsGrid stats={statsData} />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <WeatherCard weatherData={weatherConditions} />
-                  <CropHealthCard data={cropHealthData} />
-                  <YieldForecastCard forecastData={yieldForecastData} />
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2">
-                    <FieldStatusTable
-                      fields={filteredFields}
-                      onSeeAllClick={() => setIsSeeAllFieldsOpen(true)}
-                    />
+              {/* Farm Operations Telemetry - User-Friendly "See More" Expandable Section */}
+              <div className="pt-6 border-t border-slate-200/80 space-y-5">
+                {/* Header with Title & See More / See Less Toggle Button */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-3xl border border-slate-100 shadow-xs">
+                  <div className="flex items-start sm:items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                      <Layers className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-lg font-black text-slate-900 tracking-tight">
+                          Farm Cultivation Telemetry & Operations
+                        </h3>
+                        <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold rounded-full">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          Live Stream
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 font-medium mt-0.5">
+                        Active parcel performance, sensor thresholds, micrometeorology, and automated drip irrigation
+                      </p>
+                    </div>
                   </div>
-                  <div className="lg:col-span-1">
-                    <IrrigationScheduleCard />
-                  </div>
+
+                  {/* Primary "See More" / "See Less" Button */}
+                  <button
+                    onClick={() => setIsTelemetryExpanded(!isTelemetryExpanded)}
+                    className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm transition-all cursor-pointer shrink-0 shadow-xs ${
+                      isTelemetryExpanded
+                        ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+                        : 'bg-[#059669] hover:bg-[#047857] text-white shadow-md shadow-emerald-700/20 hover:shadow-lg'
+                    }`}
+                  >
+                    {isTelemetryExpanded ? (
+                      <>
+                        <EyeOff className="w-4 h-4" />
+                        <span>See Less (Collapse Telemetry)</span>
+                        <ChevronUp className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4 text-emerald-200" />
+                        <span>See More Details</span>
+                        <ChevronDown className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
                 </div>
+
+                {/* Collapsed State: Quick Summary Glance Cards with Direct See More CTA */}
+                {!isTelemetryExpanded && (
+                  <div className="bg-gradient-to-r from-emerald-50/50 via-slate-50 to-teal-50/40 p-4 sm:p-5 rounded-2xl border border-emerald-100/70 flex flex-col md:flex-row items-center justify-between gap-4">
+                    {/* Glance Metric Pills */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 w-full md:w-auto">
+                      <div className="px-3 py-2 bg-white rounded-xl border border-slate-100 shadow-2xs text-center sm:text-left">
+                        <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Active Fields</span>
+                        <span className="text-sm font-black text-slate-900">24 Parcels</span>
+                      </div>
+                      <div className="px-3 py-2 bg-white rounded-xl border border-slate-100 shadow-2xs text-center sm:text-left">
+                        <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Soil Moisture</span>
+                        <span className="text-sm font-black text-emerald-600">68% Optimal</span>
+                      </div>
+                      <div className="px-3 py-2 bg-white rounded-xl border border-slate-100 shadow-2xs text-center sm:text-left">
+                        <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Crop Health</span>
+                        <span className="text-sm font-black text-emerald-600">92% Vigour</span>
+                      </div>
+                      <div className="px-3 py-2 bg-white rounded-xl border border-slate-100 shadow-2xs text-center sm:text-left">
+                        <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Weather Temp</span>
+                        <span className="text-sm font-black text-slate-900">24°C Safe</span>
+                      </div>
+                      <div className="px-3 py-2 bg-white rounded-xl border border-slate-100 shadow-2xs text-center sm:text-left col-span-2 sm:col-span-1">
+                        <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Est. Yield</span>
+                        <span className="text-sm font-black text-amber-600">46.8 Tons</span>
+                      </div>
+                    </div>
+
+                    {/* Quick Expand Button */}
+                    <button
+                      onClick={() => setIsTelemetryExpanded(true)}
+                      className="text-xs font-bold text-emerald-700 hover:text-emerald-800 bg-white hover:bg-emerald-50 px-4 py-2.5 rounded-xl border border-emerald-200/80 shrink-0 transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                    >
+                      <Eye className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Expand All 8 Telemetry Cards & Charts</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-emerald-600" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Expanded State: Full Rich Graphical Telemetry, Cards, Charts & Table */}
+                {isTelemetryExpanded && (
+                  <div className="space-y-6 animate-fadeIn">
+                    {/* 8 Graphical Telemetry Cards */}
+                    <StatsGrid stats={statsData} />
+
+                    {/* 3 Detailed Telemetry Cards (Weather, Crop Health Donut, Seasonal Yield) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <WeatherCard weatherData={weatherConditions} />
+                      <CropHealthCard data={cropHealthData} />
+                      <YieldForecastCard forecastData={yieldForecastData} />
+                    </div>
+
+                    {/* Field Status Parcels Table & Irrigation Schedule */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                      <div className="lg:col-span-2">
+                        <FieldStatusTable
+                          fields={filteredFields}
+                          onSeeAllClick={() => setIsSeeAllFieldsOpen(true)}
+                        />
+                      </div>
+                      <div className="lg:col-span-1">
+                        <IrrigationScheduleCard />
+                      </div>
+                    </div>
+
+                    {/* Bottom Collapse Button */}
+                    <div className="flex justify-center pt-2">
+                      <button
+                        onClick={() => setIsTelemetryExpanded(false)}
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-2xl bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-900 border border-slate-200 text-xs font-bold shadow-2xs transition-all cursor-pointer"
+                      >
+                        <ChevronUp className="w-4 h-4" />
+                        <span>See Less (Collapse to Summary)</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
