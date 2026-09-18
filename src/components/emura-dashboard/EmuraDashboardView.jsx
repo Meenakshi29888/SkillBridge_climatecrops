@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import EmuraSidebar from './EmuraSidebar';
 import EmuraWeatherCard from './EmuraWeatherCard';
 import EmuraQuickMetrics from './EmuraQuickMetrics';
 import FertilizerLevelCard from './FertilizerLevelCard';
@@ -9,7 +8,6 @@ import EmuraAIAssistantCard from './EmuraAIAssistantCard';
 import { ChevronsUpDown, Check, User, LogOut, Settings, Edit3 } from 'lucide-react';
 
 export default function EmuraDashboardView({ userData, onEditProfile, onSwitchToAccountProfile }) {
-  const [activeSidebarItem, setActiveSidebarItem] = useState('grid');
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
 
   const userName = userData?.name || 'Rakib Kowshar';
@@ -25,16 +23,8 @@ export default function EmuraDashboardView({ userData, onEditProfile, onSwitchTo
   ];
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto bg-[#f8faf8] rounded-4xl border border-slate-200/80 shadow-2xl overflow-hidden flex min-h-[900px] my-2 animate-fadeIn">
-      {/* 1. Slim Vertical Icon Sidebar */}
-      <EmuraSidebar
-        activeItem={activeSidebarItem}
-        onSelectItem={(item) => setActiveSidebarItem(item)}
-      />
-
-      {/* 2. Main Dashboard Area */}
-      <div className="flex-1 p-4 sm:p-8 space-y-6 overflow-y-auto">
-        {/* Top Header Bar */}
+    <div className="w-full max-w-[1440px] mx-auto bg-[#f8faf8] rounded-4xl border border-slate-200/80 shadow-2xl overflow-hidden min-h-[850px] my-2 p-4 sm:p-8 space-y-6 animate-fadeIn">
+      {/* Top Header Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
@@ -143,7 +133,6 @@ export default function EmuraDashboardView({ userData, onEditProfile, onSwitchTo
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
