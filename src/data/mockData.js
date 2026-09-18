@@ -178,9 +178,7 @@ export const sidebarMenuItems = [
   { id: 'weather', label: 'Weather', icon: 'SunMedium', badge: null },
   { id: 'alerts', label: 'Alerts', icon: 'Bell', badge: 3, badgeColor: 'bg-rose-500 text-white' },
   { id: 'farm-workers', label: 'Farm Workers', icon: 'Users', badge: null },
-  { id: 'equipment', label: 'Equipment', icon: 'Wrench', badge: null },
   { id: 'settings', label: 'Settings', icon: 'Settings', badge: null },
-  { id: 'integrations', label: 'Integrations', icon: 'Network', badge: null },
   { id: 'account', label: 'Account', icon: 'User', badge: null },
   { id: 'help-support', label: 'Help & Support', icon: 'HelpCircle', badge: null },
 ];
