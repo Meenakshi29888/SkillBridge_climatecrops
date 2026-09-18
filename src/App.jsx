@@ -26,6 +26,9 @@ import UserDashboardView from './components/user-dashboard/UserDashboardView';
 import AddWorkerModal from './components/user-dashboard/AddWorkerModal';
 import EditProfileModal from './components/user-dashboard/EditProfileModal';
 
+// AgriSense Settings View
+import AgriSenseSettingsView from './components/settings/AgriSenseSettingsView';
+
 // Global Modals
 import AddFieldModal from './components/AddFieldModal';
 import NotificationsModal from './components/NotificationsModal';
@@ -399,8 +402,16 @@ export default function App() {
             </div>
           )}
 
-          {/* VIEW: Farm Workers, Team & Account Settings */}
-          {(activeTab === 'farm-workers' || activeTab === 'settings' || activeTab === 'help-support') && (
+          {/* VIEW: Settings - AgriSense Settings & Preferences Dashboard */}
+          {activeTab === 'settings' && (
+            <AgriSenseSettingsView
+              userData={userProfileData}
+              onSaveProfile={(updated) => setUserProfileData(updated)}
+            />
+          )}
+
+          {/* VIEW: Farm Workers, Team & Help Support */}
+          {(activeTab === 'farm-workers' || activeTab === 'help-support') && (
             <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
               <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
                 <div className="flex items-center gap-3">
@@ -414,12 +425,10 @@ export default function App() {
                     <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                       {activeTab === 'farm-workers'
                         ? 'Farm Workers & Team'
-                        : activeTab === 'settings'
-                        ? 'Account Settings & Preferences'
                         : 'Help & Support'}
                     </h2>
                     <p className="text-xs text-slate-500">
-                      Manage farm operations, machinery fleet, worker assignments, and account credentials
+                      Manage farm operations, machinery fleet, worker assignments, and team members
                     </p>
                   </div>
                 </div>
