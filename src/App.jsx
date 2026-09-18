@@ -8,6 +8,9 @@ import YieldForecastCard from './components/YieldForecastCard';
 import FieldStatusTable from './components/FieldStatusTable';
 import IrrigationScheduleCard from './components/IrrigationScheduleCard';
 
+// Geo-Location Soil Intelligence Homepage
+import GeoSoilHomeView from './components/geo-soil-home/GeoSoilHomeView';
+
 // AI Crop Analysis & Calendar components
 import AICropAnalysisView from './components/crop-analysis/AICropAnalysisView';
 import CropCalendarFullView from './components/crop-analysis/CropCalendarFullView';
@@ -221,7 +224,7 @@ export default function App() {
         {/* DYNAMIC SCREEN CONTENT AREA (Only this changes when clicking sidebar items) */}
         <div className="flex-1 bg-[#fbfdfb] overflow-y-auto min-h-[920px] flex flex-col">
           
-          {/* VIEW 1: Main AgFarm Operations Dashboard */}
+          {/* VIEW 1: Main AgFarm Operations & Geo-Location Soil Intelligence Homepage */}
           {activeTab === 'dashboard' && (
             <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1">
               <Header
@@ -235,23 +238,41 @@ export default function App() {
                 onMobileMenuToggle={() => setIsMobileSidebarOpen(true)}
               />
 
-              <StatsGrid stats={statsData} />
+              {/* Geo-Location Soil Intelligence Explorer (ISRIC SoilGrids REST API v2.0) */}
+              <GeoSoilHomeView
+                onNavigateToCropLifecycle={() => setActiveTab('crop-schedule')}
+                onNavigateToIrrigation={() => setActiveTab('irrigation')}
+              />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <WeatherCard weatherData={weatherConditions} />
-                <CropHealthCard data={cropHealthData} />
-                <YieldForecastCard forecastData={yieldForecastData} />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                  <FieldStatusTable
-                    fields={filteredFields}
-                    onSeeAllClick={() => setIsSeeAllFieldsOpen(true)}
-                  />
+              {/* Farm Operations Telemetry */}
+              <div className="pt-6 border-t border-slate-200/80 space-y-6">
+                <div>
+                  <h3 className="text-lg font-black text-slate-900 tracking-tight">
+                    Farm Cultivation Telemetry & Operations
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Active parcel performance, sensor thresholds, and automated drip irrigation
+                  </p>
                 </div>
-                <div className="lg:col-span-1">
-                  <IrrigationScheduleCard />
+
+                <StatsGrid stats={statsData} />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <WeatherCard weatherData={weatherConditions} />
+                  <CropHealthCard data={cropHealthData} />
+                  <YieldForecastCard forecastData={yieldForecastData} />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <FieldStatusTable
+                      fields={filteredFields}
+                      onSeeAllClick={() => setIsSeeAllFieldsOpen(true)}
+                    />
+                  </div>
+                  <div className="lg:col-span-1">
+                    <IrrigationScheduleCard />
+                  </div>
                 </div>
               </div>
             </div>
