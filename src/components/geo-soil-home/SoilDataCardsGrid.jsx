@@ -1,23 +1,12 @@
 import React from 'react';
-import {
-  FlaskConical,
-  Activity,
-  Droplets,
-  Layers,
-  Thermometer,
-  Zap,
-  CheckCircle2,
-  AlertTriangle,
-  Info,
-  ShieldAlert,
-} from 'lucide-react';
+import { FlaskConical, Activity } from 'lucide-react';
 
 export default function SoilDataCardsGrid({ soilData }) {
   if (!soilData) return null;
 
   return (
     <div className="space-y-6">
-      {/* 2-Column Top Tier Grid */}
+      {/* 2-Column Primary Grid: NPK & Soil pH */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
         {/* CARD 1: Primary Macronutrients (NPK) */}
         <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xs space-y-5 flex flex-col justify-between">
@@ -196,132 +185,7 @@ export default function SoilDataCardsGrid({ soilData }) {
           </div>
         </div>
       </div>
-
-      {/* 3-Column Bottom Tier Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-        {/* CARD 3: Organic Carbon & Soil Texture */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xs space-y-4 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-              <Layers className="w-4 h-4 text-emerald-600" />
-              <h3 className="text-sm font-black text-slate-900 tracking-tight">
-                Organic Carbon & Texture
-              </h3>
-            </div>
-
-            <div className="mt-3 space-y-3 text-xs">
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
-                <span className="font-medium text-slate-500">Soil Organic Carbon (SOC)</span>
-                <span className="font-extrabold text-slate-900">{soilData.socPercent}%</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
-                <span className="font-medium text-slate-500">Organic Matter (SOM)</span>
-                <span className="font-extrabold text-emerald-700">{soilData.organicMatterPercent}% (Rich)</span>
-              </div>
-
-              {/* Texture Fractions */}
-              <div className="space-y-1.5 pt-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                  Granulometric Composition
-                </span>
-                <div className="space-y-1 text-[11px]">
-                  <div className="flex justify-between">
-                    <span className="text-slate-600">Clay: {soilData.clayPct}%</span>
-                    <span className="text-slate-600">Silt: {soilData.siltPct}%</span>
-                    <span className="text-slate-600">Sand: {soilData.sandPct}%</span>
-                  </div>
-                  <div className="h-2 w-full rounded-full bg-slate-100 flex overflow-hidden">
-                    <div className="bg-emerald-600 h-full" style={{ width: `${soilData.clayPct}%` }} />
-                    <div className="bg-amber-400 h-full" style={{ width: `${soilData.siltPct}%` }} />
-                    <div className="bg-sky-400 h-full" style={{ width: `${soilData.sandPct}%` }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-2.5 bg-emerald-50 rounded-xl text-[11px] font-bold text-emerald-800 text-center">
-            {soilData.soilTexture}
-          </div>
-        </div>
-
-        {/* CARD 4: Soil Moisture & Thermal Profile */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xs space-y-4 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-              <Droplets className="w-4 h-4 text-sky-600" />
-              <h3 className="text-sm font-black text-slate-900 tracking-tight">
-                Soil Moisture & Physics
-              </h3>
-            </div>
-
-            <div className="mt-3 space-y-3 text-xs">
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
-                <span className="font-medium text-slate-500">Volumetric Water Content</span>
-                <span className="font-extrabold text-sky-700">{soilData.moistureVwc}</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
-                <span className="font-medium text-slate-500">Soil Temperature</span>
-                <span className="font-extrabold text-slate-900">{soilData.soilTemp}</span>
-              </div>
-
-              <div className="space-y-1.5 pt-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                  Depth Profile Moisture
-                </span>
-                <div className="space-y-1 text-[11px]">
-                  <div className="flex justify-between text-slate-600">
-                    <span>0-5 cm (Topsoil)</span>
-                    <span className="font-bold text-slate-800">28% VWC</span>
-                  </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>5-15 cm (Rootzone)</span>
-                    <span className="font-bold text-slate-800">26% VWC</span>
-                  </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>15-30 cm (Subsoil)</span>
-                    <span className="font-bold text-slate-800">24% VWC</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-2.5 bg-sky-50 rounded-xl text-[11px] font-bold text-sky-800 text-center">
-            Adequate Field Capacity (No Drought Stress)
-          </div>
-        </div>
-
-        {/* CARD 5: Secondary & Micronutrients Array */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-2xs space-y-4 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-              <Zap className="w-4 h-4 text-amber-600" />
-              <h3 className="text-sm font-black text-slate-900 tracking-tight">
-                Micronutrients (Trace Elements)
-              </h3>
-            </div>
-
-            <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-              {Object.entries(soilData.micronutrients).map(([key, item]) => (
-                <div key={key} className="p-2 bg-slate-50 rounded-xl border border-slate-100">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                    {key}
-                  </span>
-                  <span className="font-extrabold text-slate-900 text-xs">{item.value}</span>
-                  <span className="text-[9px] text-emerald-700 font-bold block">{item.status}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="p-2.5 bg-slate-50 rounded-xl text-[11px] font-semibold text-slate-500 text-center">
-            All trace minerals within agronomically sufficient bounds
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
+

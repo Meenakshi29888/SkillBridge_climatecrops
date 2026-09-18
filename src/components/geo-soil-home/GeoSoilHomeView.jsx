@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import GeoLocationSearchBar from './GeoLocationSearchBar';
 import SoilOverviewBanner from './SoilOverviewBanner';
 import SoilDataCardsGrid from './SoilDataCardsGrid';
-import CropSuitabilityRecommendationCard from './CropSuitabilityRecommendationCard';
 import { fetchISRICSoilData } from '../../services/soilApiService';
-import { Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 
 export default function GeoSoilHomeView({ onNavigateToCropLifecycle, onNavigateToIrrigation }) {
   // Default to Nashik, Maharashtra (19.9975, 73.7898)
@@ -39,7 +38,7 @@ export default function GeoSoilHomeView({ onNavigateToCropLifecycle, onNavigateT
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn pb-12">
+    <div className="space-y-6 animate-fadeIn pb-4">
       {/* 1. Geo-Location Search & Coordinates Input Bar */}
       <GeoLocationSearchBar
         onSelectLocation={handleSelectLocation}
@@ -56,7 +55,7 @@ export default function GeoSoilHomeView({ onNavigateToCropLifecycle, onNavigateT
             Querying ISRIC SoilGrids REST API v2.0...
           </p>
           <p className="text-xs text-slate-400">
-            Fetching Nitrogen (N), pH, Organic Carbon (SOC), and Soil Texture for ({currentCoords.lat.toFixed(4)}°, {currentCoords.lon.toFixed(4)}°)
+            Fetching Nitrogen (N), pH, and Soil Telemetry for ({currentCoords.lat.toFixed(4)}°, {currentCoords.lon.toFixed(4)}°)
           </p>
         </div>
       )}
@@ -78,16 +77,11 @@ export default function GeoSoilHomeView({ onNavigateToCropLifecycle, onNavigateT
             isLoading={isLoading}
           />
 
-          {/* 3. High-Impact Soil Telemetry Cards Grid (NPK, pH, SOC, Moisture, Micronutrients) */}
+          {/* 3. Primary Soil Chemistry & NPK Macronutrients Cards */}
           <SoilDataCardsGrid soilData={soilData} />
-
-          {/* 4. AI Crop Suitability & Precision Fertilizer Advisory */}
-          <CropSuitabilityRecommendationCard
-            soilData={soilData}
-            onNavigateToCropLifecycle={onNavigateToCropLifecycle}
-          />
         </>
       )}
     </div>
   );
 }
+
