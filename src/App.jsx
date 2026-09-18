@@ -359,14 +359,54 @@ export default function App() {
             </div>
           )}
 
-          {/* VIEW 4: User Profile, Farm Team, IoT Equipment & Account Settings */}
-          {(activeTab === 'account' || activeTab === 'farm-workers' || activeTab === 'equipment' || activeTab === 'settings' || activeTab === 'integrations' || activeTab === 'help-support') && (
+          {/* VIEW: Account - Emura Farm Overview Dashboard */}
+          {activeTab === 'account' && (
+            <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
+              {/* Header with Mobile Menu Trigger */}
+              <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-200/60">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
+                  >
+                    ☰
+                  </button>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                      Account & Farm Overview
+                    </h2>
+                    <p className="text-xs text-slate-500">
+                      Personalized agronomist overview, live IoT sensor metrics, plant health, and AI assistant
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsEditProfileOpen(true)}
+                    className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 transition-colors shadow-2xs cursor-pointer"
+                  >
+                    Edit Profile
+                  </button>
+                </div>
+              </div>
+
+              <EmuraDashboardView
+                userData={userProfileData}
+                onEditProfile={() => setIsEditProfileOpen(true)}
+                onSwitchToAccountProfile={() => setActiveTab('farm-workers')}
+              />
+            </div>
+          )}
+
+          {/* VIEW: Farm Workers, Team & Account Settings */}
+          {(activeTab === 'farm-workers' || activeTab === 'settings' || activeTab === 'help-support') && (
             <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
               <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setIsMobileSidebarOpen(true)}
-                    className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50"
+                    className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
                   >
                     ☰
                   </button>
@@ -374,12 +414,12 @@ export default function App() {
                     <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                       {activeTab === 'farm-workers'
                         ? 'Farm Workers & Team'
-                        : activeTab === 'equipment'
-                        ? 'IoT Fleet & Equipment'
-                        : 'Account & Farm Management'}
+                        : activeTab === 'settings'
+                        ? 'Account Settings & Preferences'
+                        : 'Help & Support'}
                     </h2>
                     <p className="text-xs text-slate-500">
-                      Manage farm operations, connected machinery, worker assignments, and account settings
+                      Manage farm operations, machinery fleet, worker assignments, and account credentials
                     </p>
                   </div>
                 </div>
@@ -392,7 +432,6 @@ export default function App() {
                 onOpenAddWorker={() => setIsAddWorkerOpen(true)}
                 onEditProfile={() => setIsEditProfileOpen(true)}
                 onExportData={() => alert('Exporting Farm Telemetry & AI Diagnostic Report...')}
-                onNavigateToAIAnalysis={() => setActiveTab('crops')}
               />
             </div>
           )}
