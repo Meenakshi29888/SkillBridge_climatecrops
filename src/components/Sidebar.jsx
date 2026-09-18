@@ -75,7 +75,7 @@ export default function Sidebar({
             </div>
             {!isCollapsed && (
               <span className="text-2xl font-bold tracking-tight text-emerald-700 flex items-center">
-                Growia<span className="text-slate-900">Farm</span>
+                Gro<span className="text-slate-900">via</span>
               </span>
             )}
           </div>
