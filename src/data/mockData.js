@@ -172,7 +172,7 @@ export const allExtendedFields = [
 export const sidebarMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: 'LayoutGrid', badge: null },
   { id: 'crop-schedule', label: 'Crop Schedule', icon: 'Sprout', badge: 'Active', badgeColor: 'bg-emerald-600 text-white' },
-  { id: 'fields', label: 'Fields', icon: 'Layers', badge: null },
+  { id: 'fields', label: 'Schedule', icon: 'Calendar', badge: null },
   { id: 'crops', label: 'Crops (AI)', icon: 'MapPin', badge: null },
   { id: 'irrigation', label: 'Irrigation', icon: 'Droplets', badge: null },
   { id: 'soil-monitoring', label: 'Soil Monitoring', icon: 'FlaskConical', badge: null },

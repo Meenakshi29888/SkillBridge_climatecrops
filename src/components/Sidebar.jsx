@@ -19,6 +19,7 @@ import {
   User,
   Radio,
   Sprout,
+  Calendar,
 } from 'lucide-react';
 
 const iconMap = {
@@ -38,6 +39,7 @@ const iconMap = {
   HelpCircle,
   Network: Radio,
   Sprout,
+  Calendar,
 };
 
 export default function Sidebar({
