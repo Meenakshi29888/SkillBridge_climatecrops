@@ -1,4 +1,5 @@
 import React from 'react';
+import groviaGLogo from '../assets/grovia-g-logo.png';
 import {
   LayoutGrid,
   Layers,
@@ -62,21 +63,42 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`bg-white h-full border-r border-slate-100 flex flex-col justify-between transition-all duration-300 ease-in-out shrink-0 select-none ${
+      className={`bg-white h-screen sticky top-0 border-r border-slate-200/80 flex flex-col justify-between transition-all duration-300 ease-in-out shrink-0 select-none z-20 ${
         isCollapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
       <div>
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-50/80">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100/70 flex items-center justify-center text-emerald-700">
-              <Sprout className="w-4 h-4 text-emerald-700" />
-            </div>
-            {!isCollapsed && (
-              <span className="text-2xl font-bold tracking-tight text-emerald-700 flex items-center">
-                Gro<span className="text-slate-900">via</span>
-              </span>
+        <div
+          className={`flex items-center border-b border-slate-100 transition-all ${
+            isCollapsed ? 'flex-col gap-2 px-2 py-4 justify-center' : 'justify-between px-5 py-4'
+          }`}
+        >
+          <div
+            className="flex items-center cursor-pointer select-none group"
+            onClick={() => {
+              if (isCollapsed) setIsCollapsed(false);
+              else setActiveTab('dashboard');
+            }}
+            title="Grovia Dashboard"
+          >
+            {isCollapsed ? (
+              <img
+                src={groviaGLogo}
+                alt="Grovia"
+                className="w-9 h-9 object-contain shrink-0 group-hover:scale-110 transition-transform"
+              />
+            ) : (
+              <div className="flex items-center">
+                <img
+                  src={groviaGLogo}
+                  alt="G"
+                  className="w-9 h-9 object-contain shrink-0 group-hover:scale-105 transition-transform -mr-1"
+                />
+                <span className="text-[23px] font-black tracking-tight text-slate-900 leading-none">
+                  ro<span className="text-emerald-600">via</span>
+                </span>
+              </div>
             )}
           </div>
           <button
@@ -85,7 +107,7 @@ export default function Sidebar({
             title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {isCollapsed ? (
-              <PanelLeft className="w-5 h-5" />
+              <PanelLeft className="w-4 h-4" />
             ) : (
               <PanelLeftClose className="w-5 h-5" />
             )}

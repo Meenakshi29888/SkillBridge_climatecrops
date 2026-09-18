@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
   body {
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     color: #1e293b;
+    background-color: #f8faf8;
     -webkit-font-smoothing: antialiased;
   }
 }
@@ -31,7 +38,7 @@
 
 /* Subtle dot matrix pattern like in background */
 .agri-bg-pattern {
-  background-color: #8da696;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-color: #f4f6f5;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }

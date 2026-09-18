@@ -33,6 +33,9 @@ import EditProfileModal from './components/user-dashboard/EditProfileModal';
 // AgriSense Settings View
 import AgriSenseSettingsView from './components/settings/AgriSenseSettingsView';
 
+// Help & Support View
+import HelpSupportView from './components/help-support/HelpSupportView';
+
 // Global Modals
 import AddFieldModal from './components/AddFieldModal';
 import NotificationsModal from './components/NotificationsModal';
@@ -177,54 +180,51 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen agri-bg-pattern p-2 sm:p-4 md:p-6 lg:p-8 flex items-center justify-center font-sans selection:bg-emerald-200 selection:text-emerald-900">
-      {/* Unified Main Application Container */}
-      <div className="w-full max-w-[1520px] bg-white rounded-3xl sm:rounded-4xl shadow-2xl overflow-hidden border border-white/40 flex flex-col md:flex-row min-h-[920px]">
-        
-        {/* PERMANENT LEFT SIDEBAR (Fixed and never changes across pages) */}
-        <div className="hidden md:block shrink-0">
-          <Sidebar
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            isCollapsed={isSidebarCollapsed}
-            setIsCollapsed={setIsSidebarCollapsed}
-            menuItems={sidebarMenuItems}
-            onOpenNotifications={() => setIsNotificationsOpen(true)}
-            unreadCount={notifications.length}
-            userData={userProfileData}
+    <div className="min-h-screen w-full bg-[#fbfdfb] flex flex-col md:flex-row font-sans selection:bg-emerald-200 selection:text-emerald-900 antialiased">
+      {/* PERMANENT LEFT SIDEBAR (Fixed and never changes across pages) */}
+      <div className="hidden md:block shrink-0 h-screen sticky top-0 z-30">
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          isCollapsed={isSidebarCollapsed}
+          setIsCollapsed={setIsSidebarCollapsed}
+          menuItems={sidebarMenuItems}
+          onOpenNotifications={() => setIsNotificationsOpen(true)}
+          unreadCount={notifications.length}
+          userData={userProfileData}
+        />
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {isMobileSidebarOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          <div
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs"
+            onClick={() => setIsMobileSidebarOpen(false)}
           />
-        </div>
-
-        {/* Mobile Sidebar Overlay */}
-        {isMobileSidebarOpen && (
-          <div className="fixed inset-0 z-50 md:hidden flex">
-            <div
-              className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs"
-              onClick={() => setIsMobileSidebarOpen(false)}
+          <div className="relative z-10 w-72 bg-white h-full shadow-2xl">
+            <Sidebar
+              activeTab={activeTab}
+              setActiveTab={(tab) => {
+                setActiveTab(tab);
+                setIsMobileSidebarOpen(false);
+              }}
+              isCollapsed={false}
+              setIsCollapsed={() => setIsMobileSidebarOpen(false)}
+              menuItems={sidebarMenuItems}
+              onOpenNotifications={() => {
+                setIsNotificationsOpen(true);
+                setIsMobileSidebarOpen(false);
+              }}
+              unreadCount={notifications.length}
+              userData={userProfileData}
             />
-            <div className="relative z-10 w-72 bg-white h-full shadow-2xl">
-              <Sidebar
-                activeTab={activeTab}
-                setActiveTab={(tab) => {
-                  setActiveTab(tab);
-                  setIsMobileSidebarOpen(false);
-                }}
-                isCollapsed={false}
-                setIsCollapsed={() => setIsMobileSidebarOpen(false)}
-                menuItems={sidebarMenuItems}
-                onOpenNotifications={() => {
-                  setIsNotificationsOpen(true);
-                  setIsMobileSidebarOpen(false);
-                }}
-                unreadCount={notifications.length}
-                userData={userProfileData}
-              />
-            </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* DYNAMIC SCREEN CONTENT AREA (Only this changes when clicking sidebar items) */}
-        <div className="flex-1 bg-[#fbfdfb] overflow-y-auto min-h-[920px] flex flex-col">
+      {/* DYNAMIC SCREEN CONTENT AREA (Only this changes when clicking sidebar items) */}
+      <main className="flex-1 bg-[#fbfdfb] min-h-screen flex flex-col min-w-0">
           
           {/* VIEW 1: Main AgFarm Operations & Geo-Location Soil Intelligence Homepage */}
           {activeTab === 'dashboard' && (
@@ -401,8 +401,8 @@ export default function App() {
             />
           )}
 
-          {/* VIEW: Farm Workers, Team & Help Support */}
-          {(activeTab === 'farm-workers' || activeTab === 'help-support') && (
+          {/* VIEW: Farm Workers & Team */}
+          {activeTab === 'farm-workers' && (
             <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
               <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
                 <div className="flex items-center gap-3">
@@ -414,9 +414,7 @@ export default function App() {
                   </button>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                      {activeTab === 'farm-workers'
-                        ? 'Farm Workers & Team'
-                        : 'Help & Support'}
+                      Farm Workers & Team
                     </h2>
                     <p className="text-xs text-slate-500">
                       Manage farm operations, machinery fleet, worker assignments, and team members
@@ -433,6 +431,25 @@ export default function App() {
                 onEditProfile={() => setIsEditProfileOpen(true)}
                 onExportData={() => alert('Exporting Farm Telemetry & AI Diagnostic Report...')}
               />
+            </div>
+          )}
+
+          {/* VIEW: Help & Support View */}
+          {activeTab === 'help-support' && (
+            <div className="p-4 sm:p-6 lg:p-8 flex-1 bg-[#f8faf8] min-h-screen flex flex-col justify-start">
+              {/* Header with Mobile Menu Trigger */}
+              <div className="flex items-center justify-between pb-2 md:hidden border-b border-slate-200/60 mb-4">
+                <button
+                  onClick={() => setIsMobileSidebarOpen(true)}
+                  className="p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
+                >
+                  ☰
+                </button>
+                <span className="text-sm font-bold text-slate-700">Help & Support</span>
+                <div className="w-8" />
+              </div>
+
+              <HelpSupportView userData={userProfileData} />
             </div>
           )}
 
@@ -503,8 +520,7 @@ export default function App() {
             </div>
           )}
 
-        </div>
-      </div>
+        </main>
 
       {/* Global Modals */}
       <AddFieldModal
