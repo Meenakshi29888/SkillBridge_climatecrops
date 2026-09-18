@@ -13,6 +13,10 @@ import AICropAnalysisView from './components/crop-analysis/AICropAnalysisView';
 import CropCalendarFullView from './components/crop-analysis/CropCalendarFullView';
 import AddCalendarTaskModal from './components/crop-analysis/AddCalendarTaskModal';
 
+// Crop Schedule & Lifecycle components
+import CropScheduleView from './components/crop-schedule/CropScheduleView';
+import LogOperationModal from './components/crop-schedule/LogOperationModal';
+
 // User Dashboard components
 import EmuraDashboardView from './components/emura-dashboard/EmuraDashboardView';
 import UserDashboardView from './components/user-dashboard/UserDashboardView';
@@ -78,6 +82,7 @@ export default function App() {
   const [isAddFieldOpen, setIsAddFieldOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isSeeAllFieldsOpen, setIsSeeAllFieldsOpen] = useState(false);
+  const [isLogOperationOpen, setIsLogOperationOpen] = useState(false);
 
   // Notifications state
   const [notifications, setNotifications] = useState([
@@ -127,6 +132,21 @@ export default function App() {
 
   const handleAddCalendarTask = (newTask) => {
     setCalendarTasks((prev) => [newTask, ...prev]);
+  };
+
+  const handleLogOperation = (newOp) => {
+    const newTask = {
+      id: `task-${Date.now()}`,
+      date: newOp.date || 'Today',
+      time: '10:00 AM',
+      title: newOp.title || 'Scheduled Operation',
+      zone: 'Field Plot A-2 (Onion)',
+      category: newOp.category?.toLowerCase() || 'general',
+      categoryColor: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+      completed: false,
+    };
+    setCalendarTasks((prev) => [newTask, ...prev]);
+    setIsLogOperationOpen(false);
   };
 
   const handleClearNotifications = () => {
@@ -228,6 +248,40 @@ export default function App() {
                   <IrrigationScheduleCard />
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* VIEW: Onion Crop Schedule & Lifecycle */}
+          {activeTab === 'crop-schedule' && (
+            <div className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-[#f8faf8]">
+              {/* Header with Mobile Menu Trigger */}
+              <div className="flex items-center justify-between gap-4 pb-2 border-b border-slate-200/60">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer"
+                  >
+                    ☰
+                  </button>
+                  <div>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                      Onion Crop Schedule & Lifecycle
+                    </h2>
+                    <p className="text-xs text-slate-500">
+                      Field Plot A-2 (Red Nashik) · 7 Growth Stages · Precision Soil Nutrients & Advisory
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs font-bold text-emerald-700">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Lifecycle Active (Day 28)
+                  </span>
+                </div>
+              </div>
+
+              <CropScheduleView onOpenLogOperation={() => setIsLogOperationOpen(true)} />
             </div>
           )}
 
@@ -444,6 +498,12 @@ export default function App() {
         onClose={() => setIsSeeAllFieldsOpen(false)}
         fields={allFieldsList}
         onAddNewFieldClick={() => setIsAddFieldOpen(true)}
+      />
+
+      <LogOperationModal
+        isOpen={isLogOperationOpen}
+        onClose={() => setIsLogOperationOpen(false)}
+        onSaveOperation={handleLogOperation}
       />
     </div>
   );

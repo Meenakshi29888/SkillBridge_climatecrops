@@ -37,6 +37,7 @@ const iconMap = {
   User,
   HelpCircle,
   Network: Radio,
+  Sprout,
 };
 
 export default function Sidebar({
